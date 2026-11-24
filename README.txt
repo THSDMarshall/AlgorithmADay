@@ -9,3 +9,5 @@ v1.1 update: upload ALL files, including isolation.js and isolation-sw.js, repla
 4. Run while True: pass (with valid indentation) and click Stop; run another program afterwards.
 5. Navigate between challenges and reload; verify code and completion persist.
 6. Confirm no isolation warning on the deployed site; test on school-managed Chrome/Edge.
+
+v1.2: Upload all files, replacing existing files. Existing aad-v1- storage keys are unchanged. Check my solution runs each case in a fresh worker with scripted input and a five-second execution timeout after loading. Cancel stops the checks. All passing checks mark the exercise complete. Checks are formative, visible in source, and use flexible output matching; they do not prove algorithm technique or award marks. Exercise 23 checks Python only. Input order for 25 is given name, surname, year; 19 uses decimal rate. Original v1.1 exercise text is unchanged. Browser acceptance testing is still required.
