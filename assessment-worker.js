@@ -1,7 +1,7 @@
 importScripts('https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js');
 let engine;
 self.onmessage=async({data:{code,test,id}})=>{try{engine=engine||await loadPyodide();postMessage({type:'ready'});let g=engine.toPy({__name__:'__main__',student_code:code,case_json:JSON.stringify(test),exercise_id:id});try{let result=await engine.runPythonAsync(`
-import json, io, contextlib, builtins, re, math
+import json, io, contextlib, builtins, re, math, ast
 case = json.loads(case_json)
 name, inputs, kind, expected, hint = case
 out = io.StringIO()
@@ -40,5 +40,11 @@ try:
     result = {'pass':bool(ok),'output':s[:1500],'detail':'' if ok else hint}
 except Exception as exc:
     result = {'pass':False,'output':out.getvalue()[:1500],'detail':type(exc).__name__+': '+str(exc)[:300]+' — '+hint}
+try:
+    nodes=list(ast.walk(ast.parse(student_code)))
+    def has(*types): return any(isinstance(n,types) for n in nodes)
+    def call(name): return any(isinstance(n,ast.Call) and ((isinstance(n.func,ast.Name) and n.func.id==name) or (isinstance(n.func,ast.Attribute) and n.func.attr==name)) for n in nodes)
+    result['skills']={'input':call('input'),'output':call('print'),'compare':has(ast.Compare),'add':has(ast.Add) or call('sum'),'subtract':has(ast.Sub),'multiply':has(ast.Mult),'divide':has(ast.Div,ast.FloorDiv),'loop':has(ast.For,ast.While,ast.comprehension),'list':has(ast.List,ast.ListComp),'random':call('randint') or call('randrange') or call('choice'),'slice':has(ast.Slice),'function':has(ast.FunctionDef),'return':has(ast.Return)}
+except SyntaxError: result['skills']={}
 json.dumps(result)
 `,{globals:g});postMessage({type:'result',result:JSON.parse(result)});}finally{g.destroy()}}catch(e){postMessage({type:'fatal',detail:String(e)})}};
