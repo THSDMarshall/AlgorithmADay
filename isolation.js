@@ -1,0 +1,1 @@
+(async()=>{if(crossOriginIsolated)return;if(!('serviceWorker' in navigator))return;try{await navigator.serviceWorker.register('./isolation-sw.js');await navigator.serviceWorker.ready;if(!sessionStorage.getItem('aad-isolation-reload')){sessionStorage.setItem('aad-isolation-reload','1');location.reload();}}catch(e){console.warn('Isolation unavailable',e)}})();

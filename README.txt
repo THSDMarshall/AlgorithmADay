@@ -1,0 +1,11 @@
+Algorithm A Day v1.1 — interactive runtime update
+Upload index.html, style.css, exercises.js, app.js and worker.js to a GitHub repository. Enable Pages from main/root. Alternatively serve locally using python -m http.server 8000 and open localhost:8000. Internet access to cdn.jsdelivr.net and cdnjs.cloudflare.com is necessary. Do not open directly as file:// because workers may be blocked.
+All 30 task descriptions are adapted from the original Google Site, linked next to each exercise. Marks retained. Original Trinket code was not recoverable. Exercises 22 and 23 have illustrative substitute data; original images for 8,22,23 were not recovered. Exercise 6 output corrected to cm/kg; 12 boundary clarified; 20 follows explicit less-than-15 instruction. Exercise 23 retains pseudocode requirement. No automatic marking; completion is self-reported. Browser runtime has not been tested; check input handling and school firewall before classroom use. Local storage is not synced or backed up. Do not enter real passwords or card data.
+
+v1.1 update: upload ALL files, including isolation.js and isolation-sw.js, replacing existing files. HTTPS or localhost required. The service worker adds cross-origin isolation headers and reloads once; modern Chrome/Edge recommended. If isolation is unavailable, input programs report an error instead of replaying. Input is passed through shared memory to the same running Python worker; Stop terminates that worker. Existing local storage keys and exercise data are unchanged. Output is capped to the last 100,000 characters in the UI. CDN access remains necessary. JavaScript syntax checks passed; live browser testing was blocked by the environment (localhost administrator restriction and CDN DNS failure). Before classroom use run the following acceptance checks:
+1. print('Hello') produces Hello.
+2. import random; generate a random number, print it, ask for input twice, print the same number again. Confirm no replay and unchanged random value.
+3. Test empty input and Unicode input, and a Python syntax error.
+4. Run while True: pass (with valid indentation) and click Stop; run another program afterwards.
+5. Navigate between challenges and reload; verify code and completion persist.
+6. Confirm no isolation warning on the deployed site; test on school-managed Chrome/Edge.
